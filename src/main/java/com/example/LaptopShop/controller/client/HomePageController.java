@@ -61,6 +61,12 @@ public class HomePageController {
         return "client/auth/login";
     }
 
+    @GetMapping("/logout2")
+    public String getLogoutPage(Model model) {
+
+        return "client/auth/logout";
+    }
+
     @GetMapping("/order-history")
     public String getOrderHistoryPage(Model model, HttpServletRequest request) {
         User curUser = new User();

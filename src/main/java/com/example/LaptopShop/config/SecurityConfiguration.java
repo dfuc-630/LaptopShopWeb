@@ -2,6 +2,7 @@ package com.example.LaptopShop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -57,8 +58,12 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/data/order/submit"))
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/data/order/submit").permitAll()
+
                         .requestMatchers("/", "/register", "/product/**", "/login", "/client/**", "/css/**", "/js/**",
                                 "/images/**", "/data/**")
                         .permitAll()
